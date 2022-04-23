@@ -19,6 +19,11 @@ export default function Categories(props) {
         <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
             <nav aria-label="main mailbox folders">
                 <List>
+                    <ListItem onClick={changeCategory(null)} disablePadding>
+                        <ListItemButton>
+                            <ListItemText primary="All category" />
+                        </ListItemButton>
+                    </ListItem>
                     {categories.map((category, index) =>
                         <ListItem onClick={changeCategory(category.name)} key={index} disablePadding>
                             <ListItemButton>
@@ -29,7 +34,6 @@ export default function Categories(props) {
                 </List>
             </nav>
             <Divider />
-
         </Box>
     );
 }
