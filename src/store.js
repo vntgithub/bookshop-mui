@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
-import userReducer from './slices/user';
-import cartReducer from './slices/cart'
+import cartReducer from './slices/cart.slice'
 
 
 const reducer = combineReducers({
-    user: userReducer,
     cart: cartReducer
 });
 export default configureStore({
