@@ -7,8 +7,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { addItemToCart, createCart } from '../slices/cart.slice';
+import { useDispatch } from 'react-redux';
+import { addItemToCart } from '../slices/cart.slice';
 
 const useStyles = makeStyles((theme) => ({
     bookContainer: {

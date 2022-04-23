@@ -6,8 +6,6 @@ import { Container, Pagination, Grid, TextField } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import categoryApi from '../api/category.api';
 import Categories from '../components/categories.component';
-import { useDispatch } from 'react-redux';
-import { createCart } from '../slices/cart.slice';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function Home() {
     const classes = useStyles();
-    const dispatch = useDispatch()
     const [books, setBooks] = useState([])
     const [numbersOfPage, setNumbersOfPage] = useState(0)
     const [page, setPage] = useState(0)
@@ -59,14 +56,6 @@ export default function Home() {
         setNumbersOfPage(count)
     }
 
-    const getCartData = () => {
-        const cartInLocalStorage = localStorage.getItem('cart')
-        if (cartInLocalStorage) {
-            const arrayItems = JSON.parse(cartInLocalStorage);
-            dispatch(createCart(arrayItems))
-        }
-    }
-
     const getCategoriesData = async () => {
         const categoriessData = await categoryApi.getCategories()
         setCategories(categoriessData)
@@ -84,7 +73,6 @@ export default function Home() {
     }, [page, category, search])
 
     useEffect(() => {
-        getCartData()
         getCategoriesData()
     }, [])
     return (
