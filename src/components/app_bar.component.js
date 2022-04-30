@@ -1,29 +1,32 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import Avatar from '@mui/material/Avatar';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useSelector } from 'react-redux';
+import '../style.css'
+import { makeStyles } from '@material-ui/core/styles';
 
-
-
-
-
+const useStyles = makeStyles((theme) => ({
+    menuBar: {
+        background: 'darkslateblue'
+    }
+}));
 
 export default function PrimarySearchAppBar() {
+    const classes = useStyles();
+    const userImg = useSelector(state => state.user.data).img || "#"
     const navigate = useNavigate()
     const userCart = useSelector(state => state.cart.data)
-    const numberItemInUserCart = userCart.length
+    const numberItemInUserCart = userCart.reduce((v1, v2) => v1 + v2.count, 0)
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -42,6 +45,7 @@ export default function PrimarySearchAppBar() {
     const handleMenuClose = () => {
         setAnchorEl(null);
         handleMobileMenuClose();
+        navigate("/my-invoices")
     };
 
     const handleMobileMenuOpen = (event) => {
@@ -50,6 +54,10 @@ export default function PrimarySearchAppBar() {
 
     const toCartPage = () => {
         navigate('/cart')
+    }
+
+    const toHome = () => {
+        navigate("/")
     }
 
     const menuId = 'primary-search-account-menu';
@@ -92,10 +100,7 @@ export default function PrimarySearchAppBar() {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
 
-                <p>Messages</p>
-            </MenuItem>
             <MenuItem onClick={toCartPage}>
                 <IconButton
                     size="large"
@@ -116,7 +121,8 @@ export default function PrimarySearchAppBar() {
                     aria-haspopup="true"
                     color="inherit"
                 >
-                    <AccountCircle />
+                    {userImg === "#" && <AccountCircle />}
+                    {userImg !== "#" && <Avatar alt="Remy Sharp" src={userImg} />}
                 </IconButton>
                 <p>Profile</p>
             </MenuItem>
@@ -125,17 +131,12 @@ export default function PrimarySearchAppBar() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar className='topMenu'>
                 <Toolbar>
-
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}
-                    >
-                        BOOK SHOP
-                    </Typography>
+                    <div onClick={toHome} className="logo">
+                        <img src="https://cdn.pixabay.com/photo/2015/11/19/21/10/glasses-1052010__340.jpg" />
+                        <div className="logoTitle">Book shop</div>
+                    </div>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 
@@ -158,7 +159,8 @@ export default function PrimarySearchAppBar() {
                             onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
-                            <AccountCircle />
+                            {userImg === "#" && <AccountCircle />}
+                            {userImg !== "#" && <Avatar alt="Remy Sharp" src={userImg} />}
                         </IconButton>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

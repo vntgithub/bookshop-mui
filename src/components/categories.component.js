@@ -7,11 +7,12 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 
 export default function Categories(props) {
-    const { categories, setCategory, setPage } = props
+    const { categories, setCategory, setPage, setSearch } = props
 
     const changeCategory = (categoryName) => {
         return function () {
             setCategory(categoryName)
+            setSearch(null)
             setPage(0)
         }
     }

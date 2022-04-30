@@ -1,11 +1,9 @@
 import React from 'react'
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
-import CartMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { addItemToCart } from '../slices/cart.slice';
@@ -25,7 +23,14 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         maxHeight: '175px'
-    }
+    },
+    ButtonAddToCart: {
+        backgroundColor: "darkslateblue",
+        '&:hover': {
+            backgroundColor: "#a09fe0"
+        }
+    },
+
 
 }));
 const Book = (props) => {
@@ -37,7 +42,7 @@ const Book = (props) => {
     return (
         <Card className={classes.bookContainer}>
             <CardContent>
-                <div minHeight={170} className={classes.bookImg}>
+                <div className={classes.bookImg}>
                     <img width="60%" height="60%" src={data.urlimg} />
                 </div>
 
@@ -57,7 +62,12 @@ const Book = (props) => {
                 </Typography>
             </CardContent>
             <CardActions className={classes.center}>
-                <Button onClick={addToCart(data)} variant="contained" size="small">Add to cart</Button>
+                <Button
+                    onClick={addToCart(data)}
+                    className="buttonAddToCart"
+                    variant="contained" size="small">
+                    Add to cart
+                </Button>
             </CardActions>
         </Card>
     )

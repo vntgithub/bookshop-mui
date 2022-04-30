@@ -62,8 +62,8 @@ export default function Home() {
     }
     const searchBook = (e) => {
         const searchString = e.target.value;
-        console.log(searchString)
         if (e.keyCode === 13 && searchString !== '') {
+            setCategory(null)
             setSearch(searchString);
         }
     }
@@ -76,10 +76,13 @@ export default function Home() {
         getCategoriesData()
     }, [])
     return (
-        <Grid container pl={10} pr={15} mt={10}>
+        <Grid container pl={10} pr={15} mt={20}>
+
             <Grid item sm={4} pl={10}>
-                <Categories categories={categories} setCategory={setCategory} setPage={setPage} />
+                <Categories categories={categories} setSearch={setSearch} setCategory={setCategory} setPage={setPage} />
             </Grid>
+
+
             <Grid item sm={8}>
 
                 <Grid item sm={5} mb={5}>
