@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import invoiceApi from '../api/invoice.api';
 import { Container } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
-import Invoice from '../components/invoices.component';
+import Invoice from '../components/invoice.component';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +34,7 @@ const CreateInvoicePage = () => {
 
     return (
         <Container className={classes.containerInvoice}>
-            {invoices.map(invoice => <Invoice invoice={invoice} />)}
+            {invoices.map(invoice => <Invoice key={invoice._id} cart={invoice.cart} />)}
         </Container>
     )
 }

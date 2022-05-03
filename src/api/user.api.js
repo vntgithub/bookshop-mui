@@ -15,8 +15,13 @@ const userApi = {
         const url = process.env.REACT_APP_URL_BACKEND + 'tokens'
         const response = await axios.post(url, { token: refreshToken })
 
-        console.log(response.data)
-
+        return response.data
+    },
+    login: async (data) => {
+        const url = baseUrl + '/login'
+        const response = await axios.post(url, data)
+        if (response.data.accessToken)
+            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`
         return response.data
     }
 

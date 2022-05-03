@@ -12,13 +12,17 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useDispatch } from 'react-redux';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { login } from '../slices/user.slice';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Truc Ngan BookShop Website
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -29,13 +33,21 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
+
+    const rsAction = unwrapResult(await dispatch(login({
+      username: data.get('email'),
       password: data.get('password'),
-    });
+    })))
+    if (data.get('remember-me')) {
+      localStorage.setItem('accessToken', rsAction.accessToken)
+      localStorage.setItem('refreshToken', rsAction.refreshToken)
+      navigate('/')
+    }
   };
 
   return (
@@ -96,6 +108,8 @@ export default function SignInSide() {
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
+                id="remember-me"
+                name="remember-me"
               />
               <Button
                 type="submit"

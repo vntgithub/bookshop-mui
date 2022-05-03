@@ -6,6 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -13,16 +14,10 @@ import Avatar from '@mui/material/Avatar';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useSelector } from 'react-redux';
 import '../style.css'
-import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-    menuBar: {
-        background: 'darkslateblue'
-    }
-}));
+
 
 export default function PrimarySearchAppBar() {
-    const classes = useStyles();
     const userImg = useSelector(state => state.user.data).img || "#"
     const navigate = useNavigate()
     const userCart = useSelector(state => state.cart.data)
@@ -52,13 +47,11 @@ export default function PrimarySearchAppBar() {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
-    const toCartPage = () => {
-        navigate('/cart')
-    }
+    const toCartPage = () => navigate('/cart')
 
-    const toHome = () => {
-        navigate("/")
-    }
+    const toHome = () => navigate("/")
+
+    const toSignIn = () => navigate("/sign-in")
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -150,18 +143,20 @@ export default function PrimarySearchAppBar() {
                                 <ShoppingCartIcon />
                             </Badge>
                         </IconButton>
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            {userImg === "#" && <AccountCircle />}
-                            {userImg !== "#" && <Avatar alt="Remy Sharp" src={userImg} />}
-                        </IconButton>
+                        {userImg !== "#" &&
+                            <IconButton
+                                size="large"
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                                color="inherit"
+                            >
+                                <Avatar alt="Remy Sharp" src={userImg} />
+                            </IconButton>}
+                        {userImg === "#" && <Button onClick={toSignIn} className="menu-link">Sign in </Button>}
+
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                         <IconButton

@@ -38,8 +38,18 @@ export const userSlice = createSlice({
         [loginByToken.fulfilled]: (state, action) => {
             state.loading = false;
             state.data = action.payload.user;
+        },
+        [login.pending]: (state) => {
+            state.loading = true;
+        },
+        [login.rejected]: (state, action) => {
+            state.loading = false;
+            state.err = action.err;
+        },
+        [login.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.data = action.payload.user;
         }
     }
 });
-//export const { signin, signup, logout } = studentSlice.actions;
 export default userSlice.reducer;

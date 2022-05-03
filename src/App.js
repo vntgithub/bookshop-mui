@@ -14,10 +14,10 @@ import { useDispatch } from 'react-redux';
 import { createCart } from './slices/cart.slice';
 import { useEffect } from "react";
 import { loginByToken } from "./slices/user.slice";
-import { unwrapResult } from "@reduxjs/toolkit";
 import userApi from "./api/user.api";
 
 function App() {
+    const currentPath = window.location.pathname
     const dispatch = useDispatch()
     const getCartData = () => {
         const cartInLocalStorage = localStorage.getItem('cart')
@@ -48,7 +48,7 @@ function App() {
     }, [])
     return (
         <BrowserRouter>
-            <AppBar />
+            {(currentPath !== "/sign-in" && currentPath !== "/sign-up") && <AppBar />}
             <Routes>
                 <Route path="/sign-up" element={<SignUp />} />
                 <Route path="/create-invoice" element={<CreateInvoice />} />
