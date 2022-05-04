@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -13,6 +11,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import UploadButtons from '../components/uploadbutton.component';
+import { makeStyles } from '@material-ui/core/styles';
+import { ClassNames } from '@emotion/react';
+const useStyles = makeStyles((theme) => ({
+  uploadbutton: {
+    marginTop: theme.spacing(2)
+  }
+
+}));
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -29,6 +35,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const classes = useStyles()
   const [avtUrl, setAvtUrl] = useState("#")
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -90,6 +97,16 @@ export default function SignUp() {
                   autoComplete="confirm-pasword"
                 />
               </Grid>
+              <Grid item xs={12} >
+                <TextField
+                  required
+                  fullWidth
+                  id="address"
+                  label="Address"
+                  name="Address"
+                  autoComplete="address"
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -99,8 +116,20 @@ export default function SignUp() {
                   name="Phone"
                   autoComplete="Phone"
                 />
-                <UploadButtons setAvtUrl={setAvtUrl}  />
-               <Grid> <Avatar sx={{ width: 100, height: 100 }} alt="Remy Sharp" src={avtUrl} /></Grid>
+               <Grid 
+                  className={classes.uploadbutton}
+                  container
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"> 
+                  <Avatar sx={{ width: 100, height: 100 }} alt="Remy Sharp" src={avtUrl} />
+                </Grid> 
+                <Grid container
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"> 
+                  <UploadButtons setAvtUrl={setAvtUrl}  />
+                </Grid>
                 
               </Grid>
               
