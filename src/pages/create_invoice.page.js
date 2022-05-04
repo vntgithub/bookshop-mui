@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Container, Grid, TextField } from "@mui/material"
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,6 +25,12 @@ const CreateInvoicePage = () => {
     const user = useSelector(state => state.user.data)
     const classes = useStyles();
 
+    useEffect(() => {
+        console.log(user)
+        document.getElementById('name').value = user.name
+        document.getElementById('phonenumber').value = user.phonenumber
+        document.getElementById('address').value = user.address
+    }, [user])
 
     const buy = () => {
         const name = document.getElementById('name').value
