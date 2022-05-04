@@ -23,6 +23,12 @@ const userApi = {
         if (response.data.accessToken)
             axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`
         return response.data
+    },
+    logout: async (refreshToken) => {
+        const url = process.env.REACT_APP_URL_BACKEND + 'tokens'
+        const response = await axios.delete(url, { token: refreshToken })
+
+        console.log(response.data)
     }
 
 };

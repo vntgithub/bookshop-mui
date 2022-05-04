@@ -21,11 +21,11 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateInvoicePage = () => {
     const classes = useStyles();
-    const [invoices, seInvoices] = useState([])
+    const [invoices, setInvoices] = useState([])
 
     const getInvoices = async () => {
         const invoiceData = await invoiceApi.getIvoices()
-        seInvoices(invoiceData)
+        setInvoices(invoiceData)
     }
     useEffect(() => {
         getInvoices()
@@ -34,7 +34,7 @@ const CreateInvoicePage = () => {
 
     return (
         <Container className={classes.containerInvoice}>
-            {invoices.map(invoice => <Invoice key={invoice._id} cart={invoice.cart} />)}
+            {invoices.map((invoice, index) => <Invoice index={index} key={invoice._id} invoice={invoice} setInvoices={setInvoices} invoices={invoices} />)}
         </Container>
     )
 }

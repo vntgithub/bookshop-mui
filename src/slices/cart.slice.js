@@ -40,9 +40,13 @@ export const cartSlice = createSlice({
             const index = action.payload
             state.data[index].count += 1
             localStorage.setItem("cart", JSON.stringify(state.data))
+        },
+        deleteCart(state) {
+            state.data = []
         }
+
     }
 });
 const { actions, reducer } = cartSlice
-export const { addItemToCart, createCart, minusCountOfItemInCart, plusCountOfItemInCart, removeItemInCart } = actions
+export const { addItemToCart, createCart, minusCountOfItemInCart, plusCountOfItemInCart, removeItemInCart, deleteCart } = actions
 export default reducer;

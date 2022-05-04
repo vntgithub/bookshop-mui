@@ -14,6 +14,7 @@ import Avatar from '@mui/material/Avatar';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useSelector } from 'react-redux';
 import '../style.css'
+import userApi from '../api/user.api';
 
 
 
@@ -36,12 +37,25 @@ export default function PrimarySearchAppBar() {
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
     };
-
     const handleMenuClose = () => {
+        setAnchorEl(null);
+        handleMobileMenuClose();
+
+    };
+
+    const toMyInvoicesPage = () => {
         setAnchorEl(null);
         handleMobileMenuClose();
         navigate("/my-invoices")
     };
+
+    const logout = () => {
+        const refreshToken = localStorage.getItem('refreshToken')
+        userApi.logout(refreshToken)
+        localStorage.removeItem('refreshToken')
+        localStorage.removeItem('accessToken')
+        navigate("/sign-in")
+    }
 
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
@@ -70,9 +84,9 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My invoices</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Log out</MenuItem>
+            <MenuItem >Profile</MenuItem>
+            <MenuItem onClick={toMyInvoicesPage}>My invoices</MenuItem>
+            <MenuItem onClick={logout}>Log out</MenuItem>
         </Menu>
     );
 

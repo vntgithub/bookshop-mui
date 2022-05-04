@@ -1,8 +1,9 @@
 import React from 'react'
 import { Button, Container, Grid, TextField } from "@mui/material"
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import invoiceApi from '../api/invoice.api';
+import { deleteCart } from '../slices/cart.slice';
 
 const useStyles = makeStyles((theme) => ({
     containerInvoice: {
@@ -19,12 +20,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 const CreateInvoicePage = () => {
+    const dispatch = useDispatch()
     const userCart = useSelector(state => state.cart.data)
     const user = useSelector(state => state.user.data)
     const classes = useStyles();
 
 
-    const getData = () => {
+    const buy = () => {
         const name = document.getElementById('name').value
         const phonenumber = document.getElementById('phonenumber').value
         const address = document.getElementById('address').value
@@ -43,6 +45,8 @@ const CreateInvoicePage = () => {
                     date: new Date()
                 }
             )
+            localStorage.setItem('cart', [])
+            dispatch(deleteCart())
         }
     }
     return (
@@ -73,7 +77,7 @@ const CreateInvoicePage = () => {
                     variant="outlined" />
             </Grid>
             <Grid xs={3} sm={3} m={3}>
-                <Button onClick={getData} variant="contained">Buy</Button>
+                <Button onClick={buy} variant="contained">Buy</Button>
             </Grid>
         </Container>
     )
