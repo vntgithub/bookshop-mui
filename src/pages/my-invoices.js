@@ -34,7 +34,13 @@ const CreateInvoicePage = () => {
 
     return (
         <Container className={classes.containerInvoice}>
-            {invoices.map((invoice, index) => <Invoice index={index} key={invoice._id} invoice={invoice} setInvoices={setInvoices} invoices={invoices} />)}
+            {invoices.map((invoice, index) =>
+                <Invoice
+                    index={index}
+                    key={invoice._id}
+                    invoice={invoice}
+                    setInvoices={setInvoices}
+                    invoices={invoices} />)}
         </Container>
     )
 }

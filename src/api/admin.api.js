@@ -1,8 +1,7 @@
-import axios from "axios";
+import axios from 'axios'
 
-const baseUrl = process.env.REACT_APP_URL_BACKEND + 'users'
-const userApi = {
-
+const baseUrl = process.env.REACT_APP_URL_BACKEND + "admins"
+const adminApi = {
     loginByToken: async (accessToken) => {
         const url = baseUrl + '/loginbytoken'
         axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
@@ -22,20 +21,16 @@ const userApi = {
         const response = await axios.post(url, data)
         if (response.data.accessToken)
             axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`
+
+        console.log(response.data)
         return response.data
     },
     logout: async (refreshToken) => {
         const url = process.env.REACT_APP_URL_BACKEND + 'tokens'
         const response = await axios.delete(url, { token: refreshToken })
 
-       
-    },
-    signup: async (user) =>{
-        const url = process.env.REACT_APP_URL_BACKEND + 'users'
-        const response = await axios.post(url, user)
         console.log(response.data)
-        return response.data
     }
+}
 
-};
-export default userApi;
+export default adminApi

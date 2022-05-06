@@ -41,9 +41,8 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 30,
         fontFamily: "monospace"
     },
-    waitting: {
-        color: "darkgoldenrod",
-        fontSize: "30"
+    waiting: {
+        color: "darkgoldenrod"
     }
 
 }));
@@ -66,7 +65,7 @@ const Invoice = (props) => {
     const stateOfInvoice = (state) => {
         switch (state) {
             case 'Watting':
-                return <TableCell className={classes.waitting} align="center">{state}</TableCell>
+                return <TableCell align="center"><span className={classes.waiting}>{state}</span></TableCell>
             case 'Delivering':
                 return <TableCell className='delivering' align="center">{state}</TableCell>
             case 'Successfull':
@@ -125,10 +124,11 @@ const Invoice = (props) => {
                             <TableCell colSpan={4}>
                                 <span className={classes.totalAmout}>Total amout: {totalAmount} $</span>
                             </TableCell>
-                            <TableCell >
-                                <Button onClick={cancel} variant="outlined">Cancel</Button>
-                            </TableCell>
-                            {invoice.state === 'Successful' &&
+                            {invoice.state === 'Waiting' &&
+                                <TableCell >
+                                    <Button onClick={cancel} variant="outlined">Cancel</Button>
+                                </TableCell>}
+                            {invoice.state === 'Successful' || invoice.state === "Cancel" &&
                                 <TableCell >
                                     <Button variant="outlined">Buy again</Button>
                                 </TableCell>}

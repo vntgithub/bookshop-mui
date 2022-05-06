@@ -67,3 +67,11 @@
 .waitting {
 	color: darkgoldenrod !important;
 }
+
+.hideButton {
+	display: none !important;
+}
+.marginTop {
+	margin-top: 100px;
+}
+

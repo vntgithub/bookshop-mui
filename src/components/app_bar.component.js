@@ -19,7 +19,9 @@ import userApi from '../api/user.api';
 
 
 export default function PrimarySearchAppBar() {
-    const userImg = useSelector(state => state.user.data).img || "#"
+    const user = useSelector(state => state.user.data)
+    const admin = useSelector(state => state.admin.data)
+    const userImg = user.img || admin.img || "#"
     const navigate = useNavigate()
     const userCart = useSelector(state => state.cart.data)
     const numberItemInUserCart = userCart.reduce((v1, v2) => v1 + v2.count, 0)
