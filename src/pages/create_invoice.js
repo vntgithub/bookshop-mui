@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Link from '@mui/material/Link';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     containerInvoice: {
@@ -36,6 +37,7 @@ const style = {
 
 const CreateInvoicePage = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [open, setOpen] = React.useState(false);
     const userCart = useSelector(state => state.cart.data)
     const user = useSelector(state => state.user.data)
@@ -43,7 +45,6 @@ const CreateInvoicePage = () => {
 
 
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
 
     useEffect(() => {
         document.getElementById("name").value = user.name
@@ -73,6 +74,9 @@ const CreateInvoicePage = () => {
             localStorage.setItem('cart', [])
             dispatch(deleteCart())
             setOpen(true)
+            setTimeout(() => {
+                navigate('/my-invoices')
+            }, 2000)
         }
     }
     return (
@@ -81,7 +85,7 @@ const CreateInvoicePage = () => {
                 <Button onClick={handleOpen}>Open modal</Button>
                 <Modal
                     open={open}
-                    onClose={handleClose}
+
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >

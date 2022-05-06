@@ -15,11 +15,14 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { useSelector } from 'react-redux';
 import '../style.css'
 import userApi from '../api/user.api';
+import adminApi from '../api/admin.api';
 
 
 
 export default function PrimarySearchAppBar() {
-    const userImg = useSelector(state => state.user.data).img || "#"
+    const user = useSelector(state => state.user.data)
+    const admin = useSelector(state => state.admin.data)
+    const userImg = "#"
     const navigate = useNavigate()
     const userCart = useSelector(state => state.cart.data)
     const numberItemInUserCart = userCart.reduce((v1, v2) => v1 + v2.count, 0)
