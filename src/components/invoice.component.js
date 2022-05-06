@@ -125,10 +125,11 @@ const Invoice = (props) => {
                             <TableCell colSpan={4}>
                                 <span className={classes.totalAmout}>Total amout: {totalAmount} $</span>
                             </TableCell>
-                            <TableCell >
-                                <Button onClick={cancel} variant="outlined">Cancel</Button>
-                            </TableCell>
-                            {invoice.state === 'Successful' &&
+                            {invoice.state === 'Waitting' &&
+                                <TableCell >
+                                    <Button onClick={cancel} variant="outlined">Cancel</Button>
+                                </TableCell>}
+                            {invoice.state === 'Successful' || invoice.state === "Cancel" &&
                                 <TableCell >
                                     <Button variant="outlined">Buy again</Button>
                                 </TableCell>}

@@ -15,6 +15,10 @@ import { Container, Grid, Button } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import { plusCountOfItemInCart, minusCountOfItemInCart, removeItemInCart } from '../slices/cart.slice';
 import { useNavigate } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Link from '@mui/material/Link';
 
 const useStyles = makeStyles((theme) => ({
     center: {
@@ -44,8 +48,23 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 30,
         fontFamily: "monospace"
     },
+    hideButton: {
+        display: "none"
+    }
 
 }));
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
 
 
 
@@ -53,9 +72,14 @@ const CartPage = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [open, setOpen] = React.useState(false);
+    const user = useSelector(state => state.user.data)
     const userCart = useSelector(state => state.cart.data)
     let totalAmount = userCart.reduce((v1, v2) => v1 + v2.count * v2.book.price, 0)
     totalAmount = Math.round(totalAmount * 100) / 100
+
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const clickButton = (index, type) => {
         return () => {
@@ -65,10 +89,36 @@ const CartPage = () => {
         }
     }
 
-    const toCreatInvoicePage = () => navigate("/create-invoice")
+    const toCreatInvoicePage = () => {
+        if (!user.name) {
+            setOpen(true)
+
+        } else {
+            navigate("/create-invoice")
+        }
+    }
 
     return (
         <Container className={classes.marginTop}>
+            <div className={classes.hideButton}>
+                <Button onClick={handleOpen}>Open modal</Button>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                            Need account to buy
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                            Please create your account to buy this books.
+                        </Typography>
+                        <Link href="/sign-up">Create new account</Link>
+                    </Box>
+                </Modal>
+            </div>
             <Grid className={classes.tiltleCartPage} mb={3} container justifyContent="center" textAlign="center">
                 <Grid item sm={3}>Your cart</Grid>
             </Grid>

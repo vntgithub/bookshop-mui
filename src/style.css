@@ -67,6 +67,9 @@
 .waitting {
 	color: darkgoldenrod !important;
 }
+.hideButton {
+	display: none !important;
+}
 
 
 
