@@ -54,7 +54,7 @@ const BooksManagerPage = () => {
     }
 
     const getCategories = async () => {
-        const data = await categoryApi.getCategories
+        const data = await categoryApi.getCategories()
         setCategories(data)
     }
     const toPage = (event, value) => {
@@ -73,7 +73,12 @@ const BooksManagerPage = () => {
     }, [])
     return (
         <div className='marginTop'>
-            <AddBook open={open} setOpen={setOpen} handleOpen={handleOpen} handleClose={handleClose} />
+            <AddBook
+                categories={categories}
+                open={open}
+                setOpen={setOpen}
+                handleOpen={handleOpen}
+                handleClose={handleClose} />
             <Container className={classes.marginTop} mt={5} maxWidth='xl'>
                 <Grid container spacing={2} >
                     <Grid item xs={3}>

@@ -17,7 +17,7 @@
 }
 
 .logo img {
-	filter: grayscale();
+
 	width: 70px;
 	height: 70px;
 	border-radius: 50%;
@@ -28,9 +28,7 @@
 	transition: filter 0.4s ease-in-out;
 }
 
-.logo:hover img {
-	filter: none;
-}
+
 
 .logoTitle {
 	font-family: sans-serif;
