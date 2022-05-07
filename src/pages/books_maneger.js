@@ -8,6 +8,8 @@ import bookApi from '../api/book.api';
 import { IconButton } from '@material-ui/core';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { makeStyles } from '@material-ui/core';
+import AddBook from '../components/add_book.component';
+import categoryApi from '../api/category.api';
 
 const useStyles = makeStyles((theme) => ({
     marginTop: {
@@ -25,10 +27,15 @@ const useStyles = makeStyles((theme) => ({
 
 const BooksManagerPage = () => {
     const classes = useStyles()
+    const [open, setOpen] = React.useState(false);
     const [books, setBooks] = useState([])
     const [page, setPage] = useState(0)
     const [search, setSearch] = useState(null)
     const [numbersOfPage, setNumbersOfPage] = useState(0)
+    const [categories, setCategories] = useState([])
+
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const getBooks = async () => {
         let searchOb = {}
         if (page) searchOb.page = page
@@ -40,6 +47,11 @@ const BooksManagerPage = () => {
         setBooks(books)
         setNumbersOfPage(count)
     }
+
+    const getCategories = async () => {
+        const data = await categoryApi.getCategories
+        setCategories(data)
+    }
     const toPage = (event, value) => {
         setPage(value)
         window.scrollTo({
@@ -50,8 +62,13 @@ const BooksManagerPage = () => {
     useEffect(() => {
         getBooks()
     }, [page, search])
+
+    useEffect(() => {
+        getCategories()
+    }, [])
     return (
         <div className='marginTop'>
+            <AddBook open={open} setOpen={setOpen} handleOpen={handleOpen} handleClose={handleClose} />
             <Container className={classes.marginTop} mt={5} maxWidth='xl'>
                 <Grid container spacing={2} >
                     <Grid item xs={3}>
@@ -69,7 +86,7 @@ const BooksManagerPage = () => {
 
                         </div>
                         <BookTable books={books} />
-                        <Pagination onChange={toPage} size="large" count={numbersOfPage} color="primary" />
+                        <Pagination className={classes.marginTop} onChange={toPage} size="medium" count={numbersOfPage} color="primary" />
                     </Grid>
                 </Grid>
 
