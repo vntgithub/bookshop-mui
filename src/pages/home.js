@@ -37,7 +37,7 @@ export default function Home() {
     const [search, setSearch] = useState(null)
     const [category, setCategory] = useState(null)
     const [categories, setCategories] = useState([])
-    const toPage = (event, value) => {
+    const toPage = (event, value) => { 
         setPage(value)
         window.scrollTo({
             top: 0,

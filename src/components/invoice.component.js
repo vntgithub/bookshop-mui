@@ -93,7 +93,7 @@ const Invoice = (props) => {
                 <Table sx={{ maxWidth: 800 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>No</TableCell>
+                            <TableCell></TableCell>
                             <TableCell align="center">Image</TableCell>
                             <TableCell colSpan={2} align="center">Name</TableCell>
                             <TableCell align="center">Count</TableCell>
@@ -115,7 +115,7 @@ const Invoice = (props) => {
                                     {row.book.name}
                                 </TableCell>
                                 <TableCell align="center">
-                                    {row.count}
+                                    x{row.count}
                                 </TableCell>
 
                             </TableRow>

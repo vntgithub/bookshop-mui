@@ -32,9 +32,7 @@ function App() {
     const signInByToken = async () => {
         const accessToken = localStorage.getItem('accessToken')
         const adminAccessToken = localStorage.getItem('adminAccessToken')
-        if (accessToken) {
-            console.log("call")
-            try {
+        if (accessToken) {            try {
                 dispatch(loginByToken(accessToken))
             } catch (error) {
                 const refreshToken = localStorage.getItem('refreshToken')

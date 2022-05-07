@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { login } from '../slices/user.slice';
 import { useNavigate } from 'react-router-dom';
-
+import swal from 'sweetalert';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -46,7 +46,18 @@ export default function SignInSide() {
     if (data.get('remember-me')) {
       localStorage.setItem('accessToken', rsAction.accessToken)
       localStorage.setItem('refreshToken', rsAction.refreshToken)
-      navigate('/')
+    
+      swal({
+        title: "Login Successfully !",
+        icon: "success",
+       });
+      window.location.href = "/";
+    }else{
+      swal({
+        title: "Login Successfully !",
+        icon: "success",
+       });
+       window.location.href = "/";
     }
   };
 
@@ -78,7 +89,7 @@ export default function SignInSide() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ m: 5, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -126,7 +137,7 @@ export default function SignInSide() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/sign-up" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

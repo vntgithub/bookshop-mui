@@ -62,7 +62,7 @@ const BooksManagerPage = () => {
                             <Grid>
                                 Create new book
                                 <IconButton>
-                                    <AddCircleIcon />
+                                    <AddCircleIcon style={{color:'FF8C32'}}/>
                                 </IconButton>
                             </Grid>
 
