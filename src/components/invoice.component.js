@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import invoiceApi from '../api/invoice.api';
+import swal from 'sweetalert';
 const useStyles = makeStyles((theme) => ({
     center: {
         display: 'flex',
@@ -60,6 +61,7 @@ const Invoice = (props) => {
         newInvoices[index].state = 'Cancel'
 
         setInvoices(newInvoices)
+        swal("Cancel!")
 
     }
     const stateOfInvoice = (state) => {

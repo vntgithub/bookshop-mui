@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { addItemToCart } from '../slices/cart.slice';
+import swal from 'sweetalert';
 
 const useStyles = makeStyles((theme) => ({
     bookContainer: {
@@ -38,8 +39,11 @@ const Book = (props) => {
     const dispatch = useDispatch()
     const { data } = props
 
-    const addToCart = (book) => () => dispatch(addItemToCart(book))
-    
+    const addToCart = (book) => () => {
+        dispatch(addItemToCart(book))
+        swal("Add book to cart successfuly!");
+    }
+
     return (
         <Card className={classes.bookContainer}>
             <CardContent>

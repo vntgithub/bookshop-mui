@@ -21,6 +21,11 @@ const useStyles = makeStyles((theme) => ({
     addBookButton: {
         display: 'flex',
         justifyContent: 'flex-end'
+    },
+
+
+    pagination: {
+        marginTop: theme.spacing(2)
     }
 
 }));
@@ -79,14 +84,14 @@ const BooksManagerPage = () => {
                             <Grid>
                                 Create new book
                                 <IconButton>
-                                    <AddCircleIcon style={{color:'FF8C32'}}/>
+                                    <AddCircleIcon />
                                 </IconButton>
                             </Grid>
 
 
                         </div>
                         <BookTable books={books} />
-                        <Pagination className={classes.marginTop} onChange={toPage} size="medium" count={numbersOfPage} color="primary" />
+                        <Pagination className={classes.pagination} onChange={toPage} size="medium" count={numbersOfPage} color="primary" />
                     </Grid>
                 </Grid>
 
