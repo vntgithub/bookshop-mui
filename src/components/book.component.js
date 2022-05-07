@@ -39,6 +39,7 @@ const Book = (props) => {
     const { data } = props
 
     const addToCart = (book) => () => dispatch(addItemToCart(book))
+    
     return (
         <Card className={classes.bookContainer}>
             <CardContent>

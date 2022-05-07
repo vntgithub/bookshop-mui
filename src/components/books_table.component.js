@@ -57,7 +57,7 @@ const BookTable = (props) => {
                 <Table sx={{ maxWidth: 800 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>No</TableCell>
+                            <TableCell></TableCell>
                             <TableCell align="center">Image</TableCell>
                             <TableCell colSpan={2} align="center">Name</TableCell>
                             <TableCell align="center">Edit</TableCell>
@@ -85,7 +85,7 @@ const BookTable = (props) => {
                                     </IconButton>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <IconButton>
+                                    <IconButton >
                                         <DeleteOutlineIcon />
                                     </IconButton>
 

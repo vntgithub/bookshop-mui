@@ -143,8 +143,9 @@ export default function PrimarySearchAppBar() {
             <AppBar className='topMenu'>
                 <Toolbar>
                     <div onClick={toHome} className="logo">
-                        <img src="https://cdn.pixabay.com/photo/2015/11/19/21/10/glasses-1052010__340.jpg" />
-                        <div className="logoTitle">Book shop</div>
+                        <img src="https://cdn-icons-png.flaticon.com/128/3532/3532323.png" />
+                        
+                        <div className="logoTitle">BOOK SHOP</div>
                     </div>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

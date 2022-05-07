@@ -43,6 +43,12 @@ const CreateInvoicePage = () => {
     const user = useSelector(state => state.user.data)
     const classes = useStyles();
 
+    useEffect(() => {
+        console.log(user)
+        document.getElementById('name').value = user.name
+        document.getElementById('phonenumber').value = user.phonenumber
+        document.getElementById('address').value = user.address
+    }, [user])
 
     const handleOpen = () => setOpen(true);
 

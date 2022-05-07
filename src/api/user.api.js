@@ -28,7 +28,13 @@ const userApi = {
         const url = process.env.REACT_APP_URL_BACKEND + 'tokens'
         const response = await axios.delete(url, { token: refreshToken })
 
+       
+    },
+    signup: async (user) =>{
+        const url = process.env.REACT_APP_URL_BACKEND + 'users'
+        const response = await axios.post(url, user)
         console.log(response.data)
+        return response.data
     }
 
 };

@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 const ListBook = (props) => {
     const { books } = props
     return (
-        <Grid container spacing={5}>
+        <Grid container spacing={3}>
             {books.map((element, index) =>
                 <Grid key={index} item xs={3}>
                     <Book data={element} />
