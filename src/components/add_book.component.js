@@ -13,6 +13,9 @@ import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
+import axios from 'axios';
+import swal from 'sweetalert';
+import bookApi from '../api/book.api';
 
 const style = {
     position: 'absolute',
@@ -31,35 +34,52 @@ const Input = styled('input')({
 });
 
 export default function AddBook(props) {
-    const { open, handleOpen, handleClose, categories } = props
+    const { open, handleClose, categories, books, setBooks } = props
 
     const [category, setCategory] = React.useState('');
-    const [img, setImg] = useState('#')
+    const [img, setImg] = React.useState('#')
+    const [file, setFile] = useState(null)
 
     const handleChange = (event) => {
         setCategory(event.target.value);
     };
 
-    const getImage = (e) => {
-        console.log(e)
-        if (e.target.files.length) {
-            const src = URL.createObjectURL(e.target.files[0]);
-            console.log(src)
-            // setImg(src)
+    const getImage = (event) => {
+        if (event.target.files.length) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            const url = reader.readAsDataURL(file)
+            reader.onloadend = function (e) {
+                setImg(reader.result)
+            }.bind(this);
+
+            setFile(file);
         }
     }
 
-    const createBook = () => {
+    const createBook = async () => {
         const name = document.getElementById('name').value
         const author = document.getElementById('author').value
         const price = document.getElementById('price').value
 
-        console.log({ name, author, price, category })
+        if (name.length * author.length * price.length !== 0) {
+            const imageData = new FormData();
+            imageData.append('file', file);
+            imageData.append('upload_preset', 'booksimage');
+            imageData.append('clound_name', 'vntrieu');
+            const response = await axios.post("https://api.cloudinary.com/v1_1/vntrieu/image/upload/", imageData)
+
+            const newBook = await bookApi.create({ name, author, price, category, urlimg: response.data.secure_url })
+            setBooks([...books, newBook])
+            swal("Add book", "Create new book successfully!", "success")
+            handleClose()
+        } else {
+            swal("Add book", "Data invalid!", "error")
+        }
     }
 
     return (
         <div>
-            <Button onClick={handleOpen}>Open modal</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -101,18 +121,14 @@ export default function AddBook(props) {
                             </Grid>
                             <Grid item>
                                 <Stack direction="row" alignItems="center" spacing={2}>
-                                    <label htmlFor="contained-button-file">
-                                        <Input onChange={getImage} accept="image/*" id="contained-button-file" multiple type="file" />
-
-                                    </label>
                                     <label htmlFor="icon-button-file">
-                                        <Input accept="image/*" id="icon-button-file" type="file" />
+                                        <Input onChange={getImage} accept="image/*" id="icon-button-file" type="file" />
                                         <IconButton color="primary" aria-label="upload picture" component="span">
                                             <PhotoCamera />
                                         </IconButton>
                                     </label>
                                 </Stack>
-                                {img !== "#" && <img src={img} />}
+                                {img !== "#" && <img width={120} height={180} src={img} />}
                             </Grid>
 
                         </Grid>

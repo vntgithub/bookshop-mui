@@ -10,6 +10,8 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { makeStyles } from '@material-ui/core';
 import AddBook from '../components/add_book.component';
 import categoryApi from '../api/category.api';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     marginTop: {
@@ -31,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const BooksManagerPage = () => {
+
+    const navigate = useNavigate()
+
     const classes = useStyles()
     const [open, setOpen] = React.useState(false);
     const [books, setBooks] = useState([])
@@ -74,6 +79,8 @@ const BooksManagerPage = () => {
     return (
         <div className='marginTop'>
             <AddBook
+                books={books}
+                setBooks={setBooks}
                 categories={categories}
                 open={open}
                 setOpen={setOpen}
@@ -88,7 +95,7 @@ const BooksManagerPage = () => {
                         <div className={classes.addBookButton}>
                             <Grid>
                                 Create new book
-                                <IconButton>
+                                <IconButton onClick={handleOpen}>
                                     <AddCircleIcon />
                                 </IconButton>
                             </Grid>

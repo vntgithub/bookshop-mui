@@ -56,6 +56,8 @@ export default function PrimarySearchAppBar() {
         userApi.logout(refreshToken)
         localStorage.removeItem('refreshToken')
         localStorage.removeItem('accessToken')
+        localStorage.removeItem('adminRefreshToken')
+        localStorage.removeItem('adminAccessToken')
         navigate("/sign-in")
     }
 
@@ -144,7 +146,7 @@ export default function PrimarySearchAppBar() {
                 <Toolbar>
                     <div onClick={toHome} className="logo">
                         <img src="https://cdn-icons-png.flaticon.com/128/3532/3532323.png" />
-                        
+
                         <div className="logoTitle">BOOK SHOP</div>
                     </div>
                     <Box sx={{ flexGrow: 1 }} />

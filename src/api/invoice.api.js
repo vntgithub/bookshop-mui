@@ -1,18 +1,17 @@
-import axios from 'axios'
+import axiosClient from "./axiosClient"
 const baseURL = process.env.REACT_APP_URL_BACKEND + "invoices"
 const invoiceApi = {
     create: async (invoice) => {
-        const response = await axios.post(baseURL, invoice)
-        console.log(response.data)
+        const response = await axiosClient.post(baseURL, invoice)
         return response.data
 
     },
     getIvoices: async () => {
-        const response = await axios.get(baseURL)
+        const response = await axiosClient.get(baseURL)
         return response.data
     },
     cancel: async (id) => {
-        const response = await axios.patch(baseURL + `/cancel/${id}`)
+        const response = await axiosClient.patch(baseURL + `/cancel/${id}`)
         return response.data
     }
 }
