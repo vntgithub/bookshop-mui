@@ -10,6 +10,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+import bookApi from '../api/book.api';
+import swal from 'sweetalert';
 const useStyles = makeStyles((theme) => ({
     center: {
         display: 'flex',
@@ -49,7 +51,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 const BookTable = (props) => {
     const classes = makeStyles()
-    const { books } = props
+    const { books, setBooks, handleOpen, setBookNeedUpdate, setIndexBookNeedUpdate } = props
+
+    const deleteBook = (id, index) => () => {
+        bookApi.delete(id)
+        const newBooks = [...books]
+        newBooks.splice(index, 1)
+        setBooks(newBooks)
+        swal("Delete book", "Delete book successfully!", "success")
+    }
+
+    const openUpdateForm = (book, index) => () => {
+        setBookNeedUpdate(book)
+        setIndexBookNeedUpdate(index)
+        handleOpen()
+    }
 
     return (
         <div>
@@ -60,6 +76,8 @@ const BookTable = (props) => {
                             <TableCell></TableCell>
                             <TableCell align="center">Image</TableCell>
                             <TableCell colSpan={2} align="center">Name</TableCell>
+                            <TableCell colSpan={2} align="center">Author</TableCell>
+                            <TableCell colSpan={2} align="center">Price</TableCell>
                             <TableCell align="center">Edit</TableCell>
                             <TableCell align="center">Delete</TableCell>
                         </TableRow>
@@ -79,13 +97,21 @@ const BookTable = (props) => {
                                 <TableCell colSpan={2} align="center">
                                     {row.name}
                                 </TableCell>
+
+                                <TableCell colSpan={2} align="center">
+                                    {row.author}
+                                </TableCell>
+                                <TableCell colSpan={2} align="center">
+                                    {row.price}
+                                </TableCell>
+
                                 <TableCell align="center">
                                     <IconButton>
-                                        <EditIcon />
+                                        <EditIcon onClick={openUpdateForm(row, index)} />
                                     </IconButton>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <IconButton >
+                                    <IconButton onClick={deleteBook(row._id, index)}>
                                         <DeleteOutlineIcon />
                                     </IconButton>
 

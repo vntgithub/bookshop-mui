@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -33,11 +33,11 @@ const Input = styled('input')({
     display: 'none',
 });
 
-export default function AddBook(props) {
-    const { open, handleClose, categories, books, setBooks } = props
+export default function UpdateBook(props) {
+    const { open, handleClose, categories, books, setBooks, bookNeedUpdate, indexBookNeedUpdate } = props
 
-    const [category, setCategory] = React.useState('');
-    const [img, setImg] = React.useState('#')
+    const [category, setCategory] = useState("");
+    const [img, setImg] = useState("#")
     const [file, setFile] = useState(null)
 
     const handleChange = (event) => {
@@ -57,30 +57,50 @@ export default function AddBook(props) {
         }
     }
 
-    const createBook = async () => {
+    const updateBook = async () => {
         const name = document.getElementById('name').value
         const author = document.getElementById('author').value
         const price = document.getElementById('price').value
 
         if (name.length * author.length * price.length !== 0) {
-            const imageData = new FormData();
-            imageData.append('file', file);
-            imageData.append('upload_preset', 'booksimage');
-            imageData.append('clound_name', 'vntrieu');
-            const response = await axios.post("https://api.cloudinary.com/v1_1/vntrieu/image/upload/", imageData)
+            let urlimg = null
+            let newBook = {
+                ...bookNeedUpdate,
+                name,
+                author,
+                category,
+                price
+            }
+            if (file) {
+                const imageData = new FormData();
+                imageData.append('file', file);
+                imageData.append('upload_preset', 'booksimage');
+                imageData.append('clound_name', 'vntrieu');
+                const response = await axios.post("https://api.cloudinary.com/v1_1/vntrieu/image/upload/", imageData)
+                newBook.urlimg = response.data.secure_url
+            }
 
-            const newBook = await bookApi.create({ name, author, price, category, urlimg: response.data.secure_url })
-            setBooks([...books, newBook])
+            bookApi.update(newBook)
+            let newBooks = [...books]
+            newBooks[indexBookNeedUpdate] = newBook
+            setBooks(newBooks)
             setImg("#")
             setFile(null)
             setCategory("")
-            swal("Add book", "Create new book successfully!", "success")
+            swal("Update book", "Update book successfully!", "success")
             handleClose()
         } else {
-            swal("Add book", "Data invalid!", "error")
+            swal("Update book", "Data invalid!", "error")
         }
     }
 
+    useEffect(() => {
+        const namefiled = document.getElementById("name")
+        if (namefiled)
+            namefiled.value = bookNeedUpdate.name
+        setCategory(bookNeedUpdate.category)
+        setImg(bookNeedUpdate.urlimg)
+    }, [bookNeedUpdate])
     return (
         <div>
             <Modal
@@ -91,18 +111,18 @@ export default function AddBook(props) {
                 <div>
                     <Box sx={style}>
                         <Typography textAlign='center' id="modal-modal-title" variant="h6" component="h2">
-                            Add book
+                            Update book
                         </Typography>
                         <Grid container spacing={4}>
                             <Grid item xs={10}>
                                 <TextField id="name" label="Book name" variant="outlined" />
                             </Grid>
                             <Grid item xs={10}>
-                                <TextField id="author" label="Author" variant="outlined" />
+                                <TextField id="author" label="Author" variant="outlined" value={bookNeedUpdate.author} />
                             </Grid>
 
                             <Grid item xs={10}>
-                                <TextField id="price" type='number' label="Price" variant="outlined" />
+                                <TextField id="price" type='number' label="Price" variant="outlined" value={bookNeedUpdate.price} />
                             </Grid>
                             <Grid item xs={10}>
                                 <Box sx={{ minWidth: 130 }}>
@@ -137,7 +157,7 @@ export default function AddBook(props) {
                         </Grid>
                         <Grid container spacing={3}>
                             <Grid item>
-                                <Button onClick={createBook} variant="contained">Create</Button>
+                                <Button onClick={updateBook} variant="contained">Update</Button>
                             </Grid>
                         </Grid>
 

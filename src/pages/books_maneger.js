@@ -12,6 +12,7 @@ import AddBook from '../components/add_book.component';
 import categoryApi from '../api/category.api';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import UpdateBook from '../components/update_book.componet';
 
 const useStyles = makeStyles((theme) => ({
     marginTop: {
@@ -43,9 +44,15 @@ const BooksManagerPage = () => {
     const [search, setSearch] = useState(null)
     const [numbersOfPage, setNumbersOfPage] = useState(0)
     const [categories, setCategories] = useState([])
+    const [bookNeedUpdate, setBookNeedUpdate] = useState({})
+    const [indexBookNeedUpdate, setIndexBookNeedUpdate] = useState(-1)
+    const [openUpdate, setOpenUpdate] = useState(false)
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const handleOpenUpdate = () => setOpenUpdate(true);
+    const handleCloseUpdate = () => setOpenUpdate(false);
     const getBooks = async () => {
         let searchOb = {}
         if (page) searchOb.page = page
@@ -86,6 +93,17 @@ const BooksManagerPage = () => {
                 setOpen={setOpen}
                 handleOpen={handleOpen}
                 handleClose={handleClose} />
+            <UpdateBook
+                bookNeedUpdate={bookNeedUpdate}
+                indexBookNeedUpdate={indexBookNeedUpdate}
+                books={books}
+                setBooks={setBooks}
+                categories={categories}
+                open={openUpdate}
+                setOpen={setOpenUpdate}
+                handleOpen={handleOpenUpdate}
+                handleClose={handleCloseUpdate}
+            />
             <Container className={classes.marginTop} mt={5} maxWidth='xl'>
                 <Grid container spacing={2} >
                     <Grid item xs={3}>
@@ -102,7 +120,12 @@ const BooksManagerPage = () => {
 
 
                         </div>
-                        <BookTable books={books} />
+                        <BookTable
+                            setBookNeedUpdate={setBookNeedUpdate}
+                            setIndexBookNeedUpdate={setIndexBookNeedUpdate}
+                            handleOpen={handleOpenUpdate}
+                            setBooks={setBooks}
+                            books={books} />
                         <Pagination className={classes.pagination} onChange={toPage} size="medium" count={numbersOfPage} color="primary" />
                     </Grid>
                 </Grid>

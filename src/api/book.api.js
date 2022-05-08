@@ -14,6 +14,16 @@ const bookApi = {
     create: async (data) => {
         const response = await axiosClient.post(baseUrl, data)
         return response.data
+    },
+    delete: async (id) => {
+        const response = await axiosClient.delete(baseUrl + `/${id}`)
+        console.log(response)
+
+    },
+    update: async (book) => {
+        const response = await axiosClient.patch(baseUrl + `/${book._id}`, book)
+        console.log(response.data)
+        return response.data
     }
 };
 

@@ -44,7 +44,6 @@ const CreateInvoicePage = () => {
     const classes = useStyles();
 
     useEffect(() => {
-        console.log(user)
         document.getElementById('name').value = user.name
         document.getElementById('phonenumber').value = user.phonenumber
         document.getElementById('address').value = user.address
