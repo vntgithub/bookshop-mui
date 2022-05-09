@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
+import AppBar from '../components/app_bar.component'
 
 const useStyles = makeStyles((theme) => ({
     containerInvoice: {
@@ -86,6 +87,7 @@ const CreateInvoicePage = () => {
     }
     return (
         <Container className={classes.containerInvoice}>
+            <AppBar />
             <div className={classes.hideButton}>
                 <Button onClick={handleOpen}>Open modal</Button>
                 <Modal

@@ -39,6 +39,9 @@ export default function UpdateBook(props) {
     const [category, setCategory] = useState("");
     const [img, setImg] = useState("#")
     const [file, setFile] = useState(null)
+    const [name, setName] = useState("")
+    const [author, setAuthor] = useState("")
+    const [price, setPrice] = useState(null)
 
     const handleChange = (event) => {
         setCategory(event.target.value);
@@ -63,7 +66,6 @@ export default function UpdateBook(props) {
         const price = document.getElementById('price').value
 
         if (name.length * author.length * price.length !== 0) {
-            let urlimg = null
             let newBook = {
                 ...bookNeedUpdate,
                 name,
@@ -94,13 +96,19 @@ export default function UpdateBook(props) {
         }
     }
 
+    const changeName = (e) => setName(e.target.value)
+    const changePrice = (e) => setPrice(e.target.value)
+    const changeAuthor = (e) => setAuthor(e.target.value)
+
     useEffect(() => {
-        const namefiled = document.getElementById("name")
-        if (namefiled)
-            namefiled.value = bookNeedUpdate.name
         setCategory(bookNeedUpdate.category)
         setImg(bookNeedUpdate.urlimg)
+        setName(bookNeedUpdate.name)
+        setAuthor(bookNeedUpdate.author)
+        setPrice(parseInt(bookNeedUpdate.price))
+
     }, [bookNeedUpdate])
+
     return (
         <div>
             <Modal
@@ -115,14 +123,14 @@ export default function UpdateBook(props) {
                         </Typography>
                         <Grid container spacing={4}>
                             <Grid item xs={10}>
-                                <TextField id="name" label="Book name" variant="outlined" />
+                                <TextField onChange={changeName} id="name" label="Book name" variant="outlined" value={name} />
                             </Grid>
                             <Grid item xs={10}>
-                                <TextField id="author" label="Author" variant="outlined" value={bookNeedUpdate.author} />
+                                <TextField onChange={changeAuthor} id="author" label="Author" variant="outlined" value={author} />
                             </Grid>
 
                             <Grid item xs={10}>
-                                <TextField id="price" type='number' label="Price" variant="outlined" value={bookNeedUpdate.price} />
+                                <TextField onChange={changePrice} id="price" type='number' label="Price" variant="outlined" value={price} />
                             </Grid>
                             <Grid item xs={10}>
                                 <Box sx={{ minWidth: 130 }}>
@@ -168,4 +176,6 @@ export default function UpdateBook(props) {
             </Modal>
         </div >
     );
+
+
 }

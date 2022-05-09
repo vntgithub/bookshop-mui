@@ -19,6 +19,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Link from '@mui/material/Link';
+import AppBar from '../components/app_bar.component'
 
 const useStyles = makeStyles((theme) => ({
     center: {
@@ -100,6 +101,7 @@ const CartPage = () => {
 
     return (
         <Container className={classes.marginTop}>
+            <AppBar />
             <div className={classes.hideButton}>
                 <Button onClick={handleOpen}>Open modal</Button>
                 <Modal

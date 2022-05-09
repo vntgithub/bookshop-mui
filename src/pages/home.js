@@ -6,6 +6,7 @@ import { Container, Pagination, Grid, TextField } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import categoryApi from '../api/category.api';
 import Categories from '../components/categories.component';
+import AppBar from '../components/app_bar.component'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +38,7 @@ export default function Home() {
     const [search, setSearch] = useState(null)
     const [category, setCategory] = useState(null)
     const [categories, setCategories] = useState([])
-    const toPage = (event, value) => { 
+    const toPage = (event, value) => {
         setPage(value)
         window.scrollTo({
             top: 0,
@@ -77,6 +78,7 @@ export default function Home() {
     }, [])
     return (
         <Grid container pl={10} pr={15} mt={20}>
+            <AppBar />
 
             <Grid item sm={4} pl={10}>
                 <Categories categories={categories} setSearch={setSearch} setCategory={setCategory} setPage={setPage} />

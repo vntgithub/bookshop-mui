@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core';
 import AddBook from '../components/add_book.component';
 import categoryApi from '../api/category.api';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import AppBar from '../components/app_bar.component'
 import UpdateBook from '../components/update_book.componet';
 
 const useStyles = makeStyles((theme) => ({
@@ -85,6 +85,7 @@ const BooksManagerPage = () => {
     }, [])
     return (
         <div className='marginTop'>
+            <AppBar />
             <AddBook
                 books={books}
                 setBooks={setBooks}

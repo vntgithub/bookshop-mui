@@ -32,7 +32,8 @@ function App() {
     const signInByToken = async () => {
         const accessToken = localStorage.getItem('accessToken')
         const adminAccessToken = localStorage.getItem('adminAccessToken')
-        if (accessToken) {            try {
+        if (accessToken) {
+            try {
                 dispatch(loginByToken(accessToken))
             } catch (error) {
                 const refreshToken = localStorage.getItem('refreshToken')
@@ -57,12 +58,6 @@ function App() {
         }
     }
 
-    const checkPath = () => {
-        return (currentPath !== "/sign-in"
-            && currentPath !== "/sign-up"
-            && currentPath !== "/admin-sign-in"
-        )
-    }
 
     useEffect(() => {
         signInByToken()
@@ -70,7 +65,6 @@ function App() {
     }, [])
     return (
         <BrowserRouter>
-            {checkPath() && <AppBar />}
             <Routes>
                 <Route path="/sign-up" element={<SignUp />} />
                 <Route path="/create-invoice" element={<CreateInvoice />} />

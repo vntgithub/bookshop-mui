@@ -3,6 +3,7 @@ import invoiceApi from '../api/invoice.api';
 import { Container } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import Invoice from '../components/invoice.component';
+import AppBar from '../components/app_bar.component'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +35,7 @@ const CreateInvoicePage = () => {
 
     return (
         <Container className={classes.containerInvoice}>
+            <AppBar />
             {invoices.map((invoice, index) =>
                 <Invoice
                     index={index}
