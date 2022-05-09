@@ -43,13 +43,7 @@ export default function AdminMenu() {
                     <ListItemText>Categories</ListItemText>
 
                 </MenuItem>
-                <Divider />
-                <MenuItem>
-                    <ListItemIcon>
-                        <Cloud fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText>Web Clipboard</ListItemText>
-                </MenuItem>
+
             </MenuList>
         </Paper>
     );

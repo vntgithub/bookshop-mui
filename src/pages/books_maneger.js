@@ -13,6 +13,7 @@ import categoryApi from '../api/category.api';
 import { useNavigate } from 'react-router-dom';
 import AppBar from '../components/app_bar.component'
 import UpdateBook from '../components/update_book.componet';
+import { TextField } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
     marginTop: {
@@ -76,6 +77,14 @@ const BooksManagerPage = () => {
             behavior: "smooth"
         })
     }
+
+    const searchBookByName = (e) => {
+        const searchString = e.target.value;
+        if (e.keyCode === 13) {
+            setPage(0)
+            setSearch(searchString);
+        }
+    }
     useEffect(() => {
         getBooks()
     }, [page, search])
@@ -110,17 +119,19 @@ const BooksManagerPage = () => {
                     <Grid item xs={3}>
                         <AdminMenu />
                     </Grid>
-                    <Grid item xs={6}>
-                        <div className={classes.addBookButton}>
-                            <Grid>
-                                Create new book
-                                <IconButton onClick={handleOpen}>
-                                    <AddCircleIcon />
-                                </IconButton>
-                            </Grid>
+                    <Grid item xs={6} spacing={2}>
+
+                        <Grid>
+                            <TextField onKeyUp={searchBookByName} size='small' id="outlined-basic" label="Search" variant="outlined" />
+                        </Grid>
+                        <Grid>
+                            Create new book
+                            <IconButton onClick={handleOpen}>
+                                <AddCircleIcon />
+                            </IconButton>
+                        </Grid>
 
 
-                        </div>
                         <BookTable
                             setBookNeedUpdate={setBookNeedUpdate}
                             setIndexBookNeedUpdate={setIndexBookNeedUpdate}
