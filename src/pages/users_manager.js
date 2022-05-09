@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import AdminMenu from '../components/admin_menu.component'
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination'
-import BookTable from '../components/books_table.component';
+import UserTable from '../components/user_table.component';
 import bookApi from '../api/book.api';
 import { IconButton } from '@material-ui/core';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -15,6 +15,7 @@ import AppBar from '../components/app_bar.component'
 import UpdateBook from '../components/update_book.componet';
 import { TextField } from '@mui/material';
 import AdminAppBar from '../components/admin_app_bar.component';
+import userApi from '../api/user.api';
 
 const useStyles = makeStyles((theme) => ({
     marginTop: {
@@ -35,19 +36,18 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const BooksManagerPage = () => {
+const UsersManagerPage = () => {
 
     const navigate = useNavigate()
 
     const classes = useStyles()
     const [open, setOpen] = React.useState(false);
-    const [books, setBooks] = useState([])
+    const [users, setUsers] = useState([])
     const [page, setPage] = useState(0)
     const [search, setSearch] = useState(null)
     const [numbersOfPage, setNumbersOfPage] = useState(0)
-    const [categories, setCategories] = useState([])
-    const [bookNeedUpdate, setBookNeedUpdate] = useState({})
-    const [indexBookNeedUpdate, setIndexBookNeedUpdate] = useState(-1)
+    const [userNeedUpdate, setUserNeedUpdate] = useState({})
+    const [indexUserNeedUpdate, setIndexUserNeedUpdate] = useState(-1)
     const [openUpdate, setOpenUpdate] = useState(false)
 
     const handleOpen = () => setOpen(true);
@@ -55,22 +55,18 @@ const BooksManagerPage = () => {
 
     const handleOpenUpdate = () => setOpenUpdate(true);
     const handleCloseUpdate = () => setOpenUpdate(false);
-    const getBooks = async () => {
+    const getUsers = async () => {
         let searchOb = {}
         if (page) searchOb.page = page
-        if (search) searchOb.search = search
 
         const searchParams = new URLSearchParams(searchOb)
-        const bookData = await bookApi.getBooks(searchParams.toString())
-        const { books, count } = bookData
-        setBooks(books)
+        const userData = await userApi.getUsers(searchParams)
+        const { users, count } = userData
+        setUsers(users)
         setNumbersOfPage(count)
     }
 
-    const getCategories = async () => {
-        const data = await categoryApi.getCategories()
-        setCategories(data)
-    }
+
     const toPage = (event, value) => {
         setPage(value)
         window.scrollTo({
@@ -79,24 +75,15 @@ const BooksManagerPage = () => {
         })
     }
 
-    const searchBookByName = (e) => {
-        const searchString = e.target.value;
-        if (e.keyCode === 13) {
-            setPage(0)
-            setSearch(searchString);
-        }
-    }
-    useEffect(() => {
-        getBooks()
-    }, [page, search])
 
     useEffect(() => {
-        getCategories()
-    }, [])
+        getUsers()
+    }, [page])
+
     return (
         <div className='marginTop'>
             <AdminAppBar />
-            <AddBook
+            {/* <AddBook
                 books={books}
                 setBooks={setBooks}
                 categories={categories}
@@ -114,31 +101,19 @@ const BooksManagerPage = () => {
                 setOpen={setOpenUpdate}
                 handleOpen={handleOpenUpdate}
                 handleClose={handleCloseUpdate}
-            />
+            /> */}
             <Container className={classes.marginTop} mt={5} maxWidth='xl'>
                 <Grid container spacing={2} >
                     <Grid item xs={3}>
                         <AdminMenu />
                     </Grid>
                     <Grid item xs={6} spacing={2}>
-
-                        <Grid>
-                            <TextField onKeyUp={searchBookByName} size='small' id="outlined-basic" label="Search" variant="outlined" />
-                        </Grid>
-                        <Grid>
-                            Create new book
-                            <IconButton onClick={handleOpen}>
-                                <AddCircleIcon />
-                            </IconButton>
-                        </Grid>
-
-
-                        <BookTable
-                            setBookNeedUpdate={setBookNeedUpdate}
-                            setIndexBookNeedUpdate={setIndexBookNeedUpdate}
+                        <UserTable
+                            setUserNeedUpdate={setUserNeedUpdate}
+                            setIndexUserNeedUpdate={setIndexUserNeedUpdate}
                             handleOpen={handleOpenUpdate}
-                            setBooks={setBooks}
-                            books={books} />
+                            setUsers={setUsers}
+                            users={users} />
                         <Pagination className={classes.pagination} onChange={toPage} size="medium" count={numbersOfPage} color="primary" />
                     </Grid>
                 </Grid>
@@ -149,4 +124,4 @@ const BooksManagerPage = () => {
     )
 }
 
-export default BooksManagerPage
+export default UsersManagerPage

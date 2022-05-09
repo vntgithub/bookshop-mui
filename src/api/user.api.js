@@ -33,6 +33,15 @@ const userApi = {
         const response = await axiosClient.post(url, user)
         console.log(response.data)
         return response.data
+    },
+    getUsers: async (searchParams) => {
+        let url = baseUrl
+        if (searchParams.length > 0) url += "?" + searchParams
+        const response = await axiosClient.get(url)
+        return response.data
+    },
+    delete: async (id) => {
+        axiosClient.delete(baseUrl + `/${id}`)
     }
 
 };
