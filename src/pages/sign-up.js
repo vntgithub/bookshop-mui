@@ -12,7 +12,10 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import UploadButtons from '../components/uploadbutton.component';
 import { makeStyles } from '@material-ui/core/styles';
-import { ClassNames } from '@emotion/react';
+import userApi from '../api/user.api'
+import axios from 'axios';
+import { useRadioGroup } from '@mui/material';
+import swal from 'sweetalert';
 const useStyles = makeStyles((theme) => ({
   uploadbutton: {
     marginTop: theme.spacing(2)
@@ -37,13 +40,36 @@ const theme = createTheme();
 export default function SignUp() {
   const classes = useStyles()
   const [avtUrl, setAvtUrl] = useState("#")
-  const handleSubmit = (event) => {
+  const [file, setFile] = useState(null)
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const check = data.get('Username').length *
+      data.get('Password').length *
+      data.get('ConfirmPassword').length *
+      data.get('Address').length *
+      data.get('Phone')
+    if (check === 0) {
+      swal("Sign up!", "Data invalid!", "error");
+    } else {
+      //upload image
+      const imageData = new FormData();
+      imageData.append('file', file);
+      imageData.append('upload_preset', 'booksimage');
+      const response = await axios.post("https://api.cloudinary.com/v1_1/vntrieu/image/upload/", imageData)
+
+      const userdata = await userApi.create({
+        username: data.get('Username'),
+        password: data.get('Password'),
+        confirmPassword: data.get('ConfirmPassword'),
+        address: data.get('Address'),
+        phonenumber: data.get('Phone'),
+        img: response.data.secure_url
+      })
+      swal("Sign up!", "Sign up successfully!", "success");
+    }
+
+
   };
 
   return (
@@ -79,6 +105,7 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} >
                 <TextField
+                  type="password"
                   required
                   fullWidth
                   id="Password"
@@ -89,11 +116,12 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} >
                 <TextField
+                  type="password"
                   required
                   fullWidth
                   id="ConfirmPassword"
                   label="Confirm assword"
-                  name="Password"
+                  name="ConfirmPassword"
                   autoComplete="confirm-pasword"
                 />
               </Grid>
@@ -116,24 +144,24 @@ export default function SignUp() {
                   name="Phone"
                   autoComplete="Phone"
                 />
-               <Grid 
+                <Grid
                   className={classes.uploadbutton}
                   container
                   direction="row"
                   justifyContent="center"
-                  alignItems="center"> 
+                  alignItems="center">
                   <Avatar sx={{ width: 100, height: 100 }} alt="Remy Sharp" src={avtUrl} />
-                </Grid> 
+                </Grid>
                 <Grid container
                   direction="row"
                   justifyContent="center"
-                  alignItems="center"> 
-                  <UploadButtons setAvtUrl={setAvtUrl}  />
+                  alignItems="center">
+                  <UploadButtons setFile={setFile} setAvtUrl={setAvtUrl} />
                 </Grid>
-                
+
               </Grid>
-              
-              
+
+
             </Grid>
             <Button
               type="submit"

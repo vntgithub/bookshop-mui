@@ -19,20 +19,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UploadButtons(props) {
   const classes = useStyles();
-    const {setAvtUrl} = props
+  const { setAvtUrl, setFile } = props
 
-    const getAvt = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        const url = reader.readAsDataURL(file)
-        reader.onloadend = function (e) {
-            setAvtUrl(reader.result)
-          }.bind(this);
+  const getAvt = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    const url = reader.readAsDataURL(file)
+    reader.onloadend = function (e) {
+      setAvtUrl(reader.result)
+      setFile(file)
+    }.bind(this);
 
-    }
+  }
 
   return (
-    <Stack className={classes.uploadbutton}  direction="row" alignItems="center" spacing={2}>
+    <Stack className={classes.uploadbutton} direction="row" alignItems="center" spacing={2}>
       <label htmlFor="contained-button-file">
         <Input onChange={getAvt} accept="image/*" id="contained-button-file" multiple type="file" />
         <Button variant="contained" component="span">

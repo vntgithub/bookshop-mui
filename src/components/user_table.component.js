@@ -49,7 +49,7 @@ const UserTable = (props) => {
                                     {index + 1}
                                 </TableCell>
                                 <TableCell align="center">
-                                    <img width="35%" height="35%" src={row.urlimg} />
+                                    <img width="35%" height="35%" src={row.img} />
                                 </TableCell>
                                 <TableCell colSpan={2} align="center">
                                     {row.name}

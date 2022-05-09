@@ -42,6 +42,10 @@ const userApi = {
     },
     delete: async (id) => {
         axiosClient.delete(baseUrl + `/${id}`)
+    },
+    create: async (user) => {
+        const response = await axiosClient.post(baseUrl, user)
+        return response.data
     }
 
 };
