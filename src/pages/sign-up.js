@@ -48,10 +48,12 @@ export default function SignUp() {
       data.get('Password').length *
       data.get('ConfirmPassword').length *
       data.get('Address').length *
-      data.get('Phone')
+      data.get('Phone').length
     if (check === 0) {
       swal("Sign up!", "Data invalid!", "error");
     } else {
+      if (data.get('ConfirmPassword') !== data.get('Password'))
+        swal("Sign up!", "Password not match!", "error");
       //upload image
       const imageData = new FormData();
       imageData.append('file', file);
