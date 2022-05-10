@@ -73,7 +73,7 @@ const BookTable = (props) => {
                 <Table sx={{ maxWidth: 800 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell></TableCell>
+                            <TableCell>No</TableCell>
                             <TableCell align="center">Image</TableCell>
                             <TableCell colSpan={2} align="center">Name</TableCell>
                             <TableCell colSpan={2} align="center">Author</TableCell>

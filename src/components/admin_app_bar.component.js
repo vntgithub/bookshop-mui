@@ -65,7 +65,7 @@ export default function AdminAppBar() {
 
     const toHome = () => navigate("/")
 
-    const toSignIn = () => navigate("/sign-in")
+    const toSignIn = () => navigate("/admin-sign-in")
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (

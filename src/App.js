@@ -19,6 +19,7 @@ import AdminSignIn from "./pages/admin_sign_in";
 import { adminLoginByToken } from "./slices/admin.slice";
 import BooksManagerPage from "./pages/books_maneger";
 import UsersManagerPage from "./pages/users_manager";
+import InvoicesManagerPage from "./pages/invoices_manager";
 
 function App() {
     const currentPath = window.location.pathname
@@ -76,6 +77,7 @@ function App() {
                 <Route path="/admin-sign-in" element={<AdminSignIn />} />
                 <Route path="/books-manager" element={<BooksManagerPage />} />
                 <Route path="/users-manager" element={<UsersManagerPage />} />
+                <Route path="/invoices-manager" element={<InvoicesManagerPage />} />
             </Routes>
         </BrowserRouter>
     )

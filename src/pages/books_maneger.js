@@ -11,7 +11,6 @@ import { makeStyles } from '@material-ui/core';
 import AddBook from '../components/add_book.component';
 import categoryApi from '../api/category.api';
 import { useNavigate } from 'react-router-dom';
-import AppBar from '../components/app_bar.component'
 import UpdateBook from '../components/update_book.componet';
 import { TextField } from '@mui/material';
 import AdminAppBar from '../components/admin_app_bar.component';
@@ -120,7 +119,7 @@ const BooksManagerPage = () => {
                     <Grid item xs={3}>
                         <AdminMenu />
                     </Grid>
-                    <Grid item xs={6} spacing={2}>
+                    <Grid item xs={6} >
 
                         <Grid>
                             <TextField onKeyUp={searchBookByName} size='small' id="outlined-basic" label="Search" variant="outlined" />

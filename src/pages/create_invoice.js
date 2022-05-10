@@ -10,6 +10,7 @@ import Modal from '@mui/material/Modal';
 import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
 import AppBar from '../components/app_bar.component'
+import swal from 'sweetalert';
 
 const useStyles = makeStyles((theme) => ({
     containerInvoice: {
@@ -79,7 +80,7 @@ const CreateInvoicePage = () => {
             )
             localStorage.setItem('cart', [])
             dispatch(deleteCart())
-            setOpen(true)
+            swal("Payment", "Create invoice successfully", "success")
             setTimeout(() => {
                 navigate('/my-invoices')
             }, 2000)

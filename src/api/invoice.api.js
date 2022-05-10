@@ -13,6 +13,14 @@ const invoiceApi = {
     cancel: async (id) => {
         const response = await axiosClient.patch(baseURL + `/cancel/${id}`)
         return response.data
+    },
+    getAllInvoices: async (page) => {
+        const response = await axiosClient.get(baseURL + `/all?page=${page}`)
+        return response.data
+    },
+    update: async (data, id) => {
+        const response = await axiosClient.patch(baseURL + `/${id}`, data)
+        return response.data
     }
 }
 
